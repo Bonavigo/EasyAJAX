@@ -2,100 +2,127 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Bruno Bonavigo</title>
+		<title>EasyAJAX - Simple AJAX requisitions</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="img/favicon.ico" rel="icon" type="image/x-icon"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-		<link href="https://bonavigo.net/" rel="canonical"/>
+		<script src="EasyAJAX/EasyAJAX.js"></script>
+		<script src="js/app.js"></script>
+		<link rel="stylesheet" href="css/app.css">
+		<link href="https://bonavigo.github.io/EasyAJAX/" rel="canonical"/>
 		<meta name="theme-color" content="#1F1AA2">
-		<meta name="keywords" content="bruno, bonavigo, php, js, materializecss, materialize">
+		<meta name="keywords" content="ajax, ajax without jquery, post, get, simple ajax">
 		<meta content="@BrunoBonavigo" name="twitter:site"/>
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="@BrunoBonavigo">
 		<meta name="twitter:creator" content="@BrunoBonavigo">
-		<meta property="og:site_name" content="Bruno Bonavigo">
+		<meta property="og:site_name" content="EasyAJAX - Simple AJAX requisitions">
 		<meta property="og:locale" content="pt_BR"/>
 		<meta property="og:type" content="website"/>
-		<meta property="og:title" content="Bruno Bonavigo"/>
-		<meta property="og:description" content="O site pessoal de Bruno Bonavigo."/>
-		<meta property="og:url" content="https://bonavigo.net/"/>
-		<meta property="og:image" content="https://bonavigo.net/img/logo.png"/>
+		<meta property="og:title" content="EasyAJAX - Simple AJAX requisitions"/>
+		<meta property="og:description" content="A simple library for making AJAX requisitions without jQuery."/>
+		<meta property="og:url" content="https://bonavigo.github.io/EasyAJAX/"/>
+		<meta property="og:image" content="https://bonavigo.github.io/EasyAJAX/img/logo.png"/>
 		<script src="https://kit.fontawesome.com/5db384e8a3.js" crossorigin="anonymous"></script>
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<style type="text/css">
-			body {
-				display: flex;
-				min-height: 100vh;
-				flex-direction: column;
-			}
-			main {
-				flex: 1 0 auto;
-			}
-			.readme h1 {
-				font-weight:bold;
-				margin:10px 0;
-				font-size:20px;
-			}
-			.sobre_mim h1 {
-				margin:10px 5px;
-				font-size:18px;
-			}
-			.radius {
-				border-radius:5px;
-			}
-		</style>
-		<script src="EasyAJAX.js"></script>
 	</head>
 	<body class="grey lighten-4">
 		<header>
 			<nav class="blue darken-4">
 				<div class="nav-wrapper container">
-					<a href="#" class="brand-logo">Bruno Bonavigo</a>
+					<a href="#" class="brand-logo">EasyAJAX</a>
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="badges.html">Repository</a></li>
+						<li><a href="https://github.com/Bonavigo">Creator</a></li>
+					</ul>
 				</div>
 			</nav>
 		</header>
 		<main>
+			<div class="container">
+				<div>
+					<h4>EasyAJAX</h4>
+					<h5>A simple library for making AJAX requisitions.</h5>
+				</div>
+				<div>
+					<h5>For example, you can test it here by searching for a Habbo's information here using the Habbo API.</h5>
+				</div>
+			</div>
 			<div class="container" style="margin-top:20px;">
 				<div class="card-panel">
-					<div>
-						<h4>Seja bem-vindo ao meu site!</h4>
-						<h5>Aqui é o lugar que eu uso para exibir meus repositórios e mostrar um pouco mais sobre mim.</h5>
-					</div><br>
-					<div class="chip">
-						Um pouco mais sobre mim
-					</div>
-					<div class="card-panel radius">
-						<div class="sobre_mim">
-							<h1>Meu nome é <b>Bruno Bonavigo</b>, tenho <span id="idade">x</span> anos e moro em São Paulo.</h1>
-							<h1>Meus principais hobbies são desenvolver e jogar. Gosto de vários jogos, porém entre eles "Habbo Hotel", "Counter-Strike: Global Offensive" e outros jogos, pricipalmente os desenvolvidos pela Valve.</h1>
-							<h1>Esta página foi feita usando Materialize e uma biblioteca feita por mim para simplificar as requisições AJAX, o <a href="https://github.com/Bonavigo/EasyAJAX">EasyAJAX</a>.</h1>
+					<div class="row">
+						<div class="input-field">
+							<input type="text" id="input_search" onkeypress="verify_enter(event, this.value);">
+							<label for="input_search">Habbo name</label>
+						</div>
+						<div class="input-field">
+							<select id="hotel">
+								<option value=".com">International</option>
+								<option value=".com.br">Brazil</option>
+								<option value=".com.tr">Turkey</option>
+								<option value=".de">Germany</option>
+								<option value=".es">Spain</option>
+								<option value=".fi">Finland</option>
+								<option value=".it">Italy</option>
+								<option value=".nl">Netherlands</option>
+							</select>
+							<label>Choose Habbo</label>
+						</div>
+						<div class="right">
+							<button style="background: #2e4757;color:#FFF;" type="button" onclick="search();" class="btn waves-effect waves-light">Search Habbo</button>
 						</div>
 					</div>
-					<div class="chip">
-						Meu repositório pessoal
-					</div>
-					<div class="card-panel radius">
-						<div class="readme" id="readme">
-							<div class="progress">
-								<div class="indeterminate"></div>
-							</div>
+					<div class="row" style="display:none;" id="result">
+						<div style="width:50px;height:91px;float:left;">
+							<img src="" id="image_result">
+						</div>
+						<div style="float:left;margin-top:10px;margin-left:10px;">
+							<p>
+								<strong>Nickname:</strong> <span id="nickname_result"></span><br>
+								<strong>Motto:</strong> <span id="motto_result"></span><br>
+								<strong>Creation data:</strong> <span id="creation_result"></span>
+							</p>
 						</div>
 					</div>
-					<div class="chip">
-						Meus repositórios
+					<div class="row" style="display:none;" id="error">
+						<h5>Sorry, the nick you searched doesn't exist.</h5>
 					</div>
-					<div>
-						<ul class="collection z-depth-1 radius">
-							<div id="repos">
-								<a class="black-text collection-item" href="#">
-									<div class="progress">
-										<div class="indeterminate"></div>
-									</div>
-								</a>
-							</div>
-						</ul>
+					<div class="row" style="display:none;" id="loading">
+						<h5>Searching in the Habbo API...</h5>
 					</div>
+				</div>
+			</div>
+			<div class="container" style="margin-top:20px;">
+				<div class="card-panel">
+					<h5 id="getting-started"><a href="#getting-started" class="black-text"><b># </b>Getting Started</a></h5>
+					<p>You can <a href="https://raw.githubusercontent.com/Bonavigo/EasyAJAX/main/EasyAJAX/EasyAJAX.js">download here</a> the normal version and <a href="https://raw.githubusercontent.com/Bonavigo/EasyAJAX/main/EasyAJAX/EasyAJAX.min.js">download here</a> the minified version.</p>
+					<br>
+					<h5 id="get"><a href="#get" class="black-text"><b># </b>GET Method</a></h5>
+					<p>
+						For using the GET method, you need to use the EasyAJAX object (easyAJAX) and the GET method, resulting in something like this:<br>
+						<pre class="monospace">easyAJAX.GET(url, success, error);</pre>
+						url: The URL from the page you want to call;<br>
+						success: The anonymous function that will be called if the response is 200 (when called, the function will recieve the response);<br>
+						error: The anonymous function that will be called if the response is equal to 403 or 404;<br>
+						For example, the GET that is used in this page works like this:<br>
+						<span class="monospace">
+						var success = function change_data(response) {<br>
+						}<br>
+						var error = function error() {<br>
+						}
+						</span>
+					</p>
+					<br>
+					<h5 id="post"><a href="#post" class="black-text"><b># </b>POST Method</a></h5>
+					<p>
+						For using the POST method, you need to use the EasyAJAX object (easyAJAX) and the POST method, resulting in something like this:<br>
+						<pre class="monospace">easyAJAX.POST(url, post, success, error);</pre>
+						url: The URL from the page you want to call;<br>
+						post: The POST data you want to send (in x-www-form-urlencoded);<br>
+						success: The anonymous function that will be called if the response is 200 (when called, the function will recieve the response);<br>
+						error: The anonymous function that will be called if the response is equal to 403 or 404;
+					</p>
 				</div>
 			</div>
 		</main>
@@ -103,18 +130,18 @@
 		  <div class="container">
 			<div class="row">
 			  <div class="col l6 s12">
-				<h5 class="white-text">Bruno Bonavigo</h5>
-				<p class="grey-text text-lighten-4">Criado em 2021 por <b><a class="grey-text text-lighten-4" href="https://github.com/Bonavigo">Bruno Bonavigo</a></b>.</p>
+				<h5 class="white-text">EasyAJAX</h5>
+				<p class="grey-text text-lighten-4">Created in 2021 by <b><a class="grey-text text-lighten-4" href="https://github.com/Bonavigo">Bruno Bonavigo</a></b>.</p>
+				<p class="grey-text text-lighten-4">This website isn't affiliated to Sulake Oy. The use of the Habbo API is just for example.</p>
 			  </div>
 			</div>
 		  </div>
 		  <div class="footer-copyright blue darken-4">
 			<div class="container">
 				© <span id="year"></span> Bruno Bonavigo
-				<a class="grey-text text-lighten-4 right" href="https://twitter.com/BrunoBonavigo">Meu Twitter</a>
+				<a class="grey-text text-lighten-4 right" href="https://twitter.com/BrunoBonavigo">My Twitter</a>
 			</div>
 		  </div>
 		</footer>
-		<script src="main.js"></script>
 	</body>
 </html>
